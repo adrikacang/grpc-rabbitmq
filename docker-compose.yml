@@ -1,24 +1,16 @@
 # docker-compose.yml
 version: "3.8"
 services:
-  grpc-server:
-    build:
-      context: ./server
-    ports:
-      - "50051:50051"
-    depends_on:
-      - db
-      - rabbitmq
-  db:
-    build:
-      context: ./db
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
+  # db:
+  #   build:
+  #     context: ./db
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: test
+  #     MYSQL_USER: test
+  #     MYSQL_PASSWORD: test
   rabbitmq:
     build:
       context: ./rabbitmq
@@ -29,8 +21,16 @@ services:
     ports:
       - "5672:5672" # RabbitMQ default port
       - "15672:15672" # RabbitMQ management plugin port
+  grpc-server:
+    build:
+      context: ./server
+    ports:
+      - "50051:50051"
+    depends_on:
+      - rabbitmq
   consumer:
     build:
       context: ./consumer
     depends_on:
       - rabbitmq
+      - grpc-server

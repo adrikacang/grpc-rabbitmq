@@ -29,7 +29,7 @@ func (s *UserServer) GetUser(ctx context.Context, req *pb.UserRequest) (*pb.User
 
 func (s *BookingServer) Booking(ctx context.Context, req *pb.BookingRequest) (*pb.BookingResponse, error) {
 	// Connect to RabbitMQ server
-	conn, err := amqp.Dial("amqp://user:password@localhost:5672/")
+	conn, err := amqp.Dial("amqp://user:password@rabbitmq:5672/")
 	if err != nil {
 		log.Fatalf("Failed to connect to RabbitMQ: %v", err)
 	}

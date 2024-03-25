@@ -5,10 +5,10 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the consumer source code into the container
-COPY consumer.py .
+COPY . .
 
 # Install pika library
 RUN pip install pika
 
-# Command to run the consumer
-CMD ["python", "consumer.py"]
+# Wait rabbitmq to start
+CMD [ "python", "-u", "consumer.py"]
